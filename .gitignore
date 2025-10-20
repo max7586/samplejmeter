@@ -1,0 +1,19 @@
+# Logs & results
+*.jtl
+report/**
+results/**
+*.log
+# OS
+.DS_Store
+Thumbs.db
+# IDE
+.idea/
+.vscode/*
+# Python/venv (if any)
+venv/
+__pycache__/
+# Node
+node_modules/
+
+# Secrets
+.env
