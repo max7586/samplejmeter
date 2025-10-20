@@ -1,0 +1,26 @@
+name: JMeter CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  run-jmeter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JMeter
+        run: |
+          JMETER_VERSION=5.6.3
+          curl -L -o apache-jmeter.tgz https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
+          tar -xzf apache-jmeter.tgz
+          echo "$PWD/apache-jmeter-${JMETER_VERSION}/bin" >> $GITHUB_PATH
+      - name: Run baseline
+        run: |
+          bash scripts/run-baseline.sh
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-report
+          path: report/baseline_html
